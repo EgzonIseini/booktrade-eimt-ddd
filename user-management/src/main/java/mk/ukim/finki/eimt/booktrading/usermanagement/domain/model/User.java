@@ -27,6 +27,6 @@ public class User extends AbstractEntity<UserId> {
     @Embedded
     @AttributeOverride(name = "email",column = @Column(name = "email_address",nullable = false))
     private Email email;
-    
+
 
 }

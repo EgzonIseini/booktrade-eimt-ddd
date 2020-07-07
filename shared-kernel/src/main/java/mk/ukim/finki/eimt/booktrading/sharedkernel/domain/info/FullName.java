@@ -29,38 +29,41 @@ public class FullName implements ValueObject {
         lastName= null;
     }
 
-    @JsonCreator
     public FullName(@NonNull String firstName, @NonNull String lastName)
     {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-//    @NonNull
-//    @JsonProperty("first_name")
-//    public String getFirstName() {
-//        return firstName;
-//    }
-//
-//    @NonNull
-//    @JsonProperty("last_name")
-//    public String getLastName() {
-//        return lastName;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FullName fullName = (FullName) o;
+        return Objects.equals(firstName, fullName.firstName) &&
+                Objects.equals(lastName, fullName.lastName);
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName,lastName);
+        return Objects.hash(firstName, lastName);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    @JsonValue
     public String toString() {
-       return firstName + lastName;
+       return firstName + " " + lastName;
     }
+
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public String getFullName() {
+        return this.toString();
+    }
+
 }

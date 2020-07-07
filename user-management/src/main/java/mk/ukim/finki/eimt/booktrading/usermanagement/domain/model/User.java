@@ -36,7 +36,7 @@ public class User extends AbstractEntity<UserId> {
     @OneToMany(cascade =  CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<BookOwned> books;
 
-    private User()
+    protected User()
     {
 
     }
@@ -53,7 +53,7 @@ public class User extends AbstractEntity<UserId> {
         this.fullname = fullname;
     }
 
-  
+
 
     public void setEmail(Email email) {
         this.email = email;

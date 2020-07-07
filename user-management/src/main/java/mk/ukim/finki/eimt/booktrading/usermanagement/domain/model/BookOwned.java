@@ -5,15 +5,18 @@ import lombok.NonNull;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.AbstractEntity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.Instant;
-
+@Entity
+@Table(name = "books_owned")
 @Getter
 public class BookOwned extends AbstractEntity<BookId> {
 
     @Column(name = "purchased_time")
     private Instant purchase;
 
-    private BookOwned()
+    protected BookOwned()
     {
 
     }

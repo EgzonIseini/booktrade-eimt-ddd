@@ -1,4 +1,4 @@
-package mk.ukim.finki.eimt.booktrading.usermanagement;
+package mk.ukim.finki.eimt.booktrading.usermanagement.domain;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

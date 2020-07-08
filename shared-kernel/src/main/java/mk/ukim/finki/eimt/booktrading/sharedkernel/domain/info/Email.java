@@ -2,12 +2,15 @@ package mk.ukim.finki.eimt.booktrading.sharedkernel.domain.info;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Getter;
 import lombok.NonNull;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.ValueObject;
-
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.util.Objects;
 
+@Embeddable
+@Getter
 public class Email  implements ValueObject {
     @Column(name = "email_address")
     private final String email;

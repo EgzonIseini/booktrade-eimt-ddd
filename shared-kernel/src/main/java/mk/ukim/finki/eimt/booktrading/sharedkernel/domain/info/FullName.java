@@ -22,13 +22,14 @@ public class FullName implements ValueObject {
     @Column(name="last_name")
     private final String lastName;
 
-
     protected FullName()
     {
         firstName = null;
         lastName= null;
     }
 
+
+    @JsonCreator
     public FullName(@NonNull String firstName, @NonNull String lastName)
     {
         this.firstName = firstName;
@@ -50,16 +51,9 @@ public class FullName implements ValueObject {
     }
 
     @Override
-    public String toString() {
-       return firstName + " " + lastName;
-    }
-
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
+    public String toString()
+    {
+        return String.format("%s %s", this.firstName,this.lastName);
     }
 
     public String getFullName() {

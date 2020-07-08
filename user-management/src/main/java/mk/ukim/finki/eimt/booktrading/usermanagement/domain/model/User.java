@@ -1,24 +1,22 @@
 package mk.ukim.finki.eimt.booktrading.usermanagement.domain.model;
 
 import lombok.Getter;
-import lombok.NonNull;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.info.Email;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.info.FullName;
-
 import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Version;
+
 
 @Entity
 @Table(name = "users")
-
 @Getter
-
 public class User extends AbstractEntity<UserId> {
 
     @Version
     private Long version;
-
 
     @Embedded
     @AttributeOverrides(
@@ -48,14 +46,12 @@ public class User extends AbstractEntity<UserId> {
     }
 
 
-
     public void setFullname(FullName fullname) {
         this.fullname = fullname;
     }
 
-
-
     public void setEmail(Email email) {
         this.email = email;
     }
+
 }

@@ -1,5 +1,4 @@
-package mk.ukim.finki.eimt.booktrading.usermanagement.domain.model;
-
+package mk.ukim.finki.eimt.booktrading.bookmanagement.domain.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

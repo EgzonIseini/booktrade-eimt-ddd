@@ -3,9 +3,9 @@ package mk.ukim.finki.eimt.booktrading.usermanagement.domain.model;
 import lombok.Getter;
 import lombok.NonNull;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.AbstractEntity;
-
 import javax.persistence.*;
 import java.time.Instant;
+
 @Entity
 @Table(name = "books_owned")
 @Getter
@@ -19,9 +19,7 @@ public class BookOwned extends AbstractEntity<BookOwnedID> {
     private BookId bookId;
 
     protected BookOwned()
-    {
-
-    }
+    {}
 
     public BookOwned(@NonNull Instant purchase)
     {
@@ -35,4 +33,5 @@ public class BookOwned extends AbstractEntity<BookOwnedID> {
     public void setPurchase(Instant purchase) {
         this.purchase = purchase;
     }
+
 }

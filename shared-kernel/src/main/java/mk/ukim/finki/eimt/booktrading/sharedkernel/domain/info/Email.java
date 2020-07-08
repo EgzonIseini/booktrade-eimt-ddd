@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.NonNull;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.ValueObject;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.util.Objects;

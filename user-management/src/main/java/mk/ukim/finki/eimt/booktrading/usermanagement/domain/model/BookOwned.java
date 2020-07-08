@@ -4,17 +4,19 @@ import lombok.Getter;
 import lombok.NonNull;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.AbstractEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.Instant;
 @Entity
 @Table(name = "books_owned")
 @Getter
-public class BookOwned extends AbstractEntity<BookId> {
+public class BookOwned extends AbstractEntity<BookOwnedID> {
 
     @Column(name = "purchased_time")
     private Instant purchase;
+
+    @Embedded
+    @AttributeOverride(name = "id",column = @Column(name = "book_id",nullable = false))
+    private BookId bookId;
 
     protected BookOwned()
     {

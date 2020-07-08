@@ -1,22 +1,20 @@
 package mk.ukim.finki.eimt.booktrading.usermanagement.domain.model;
 
-
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.DomainObjectId;
 
 import javax.persistence.Embeddable;
 
-@Getter
 @Embeddable
-public class BookId extends DomainObjectId {
+@Getter
+public class BookOwnedID extends DomainObjectId {
 
-    protected BookId() {
+    protected BookOwnedID()
+    {
         super("");
     }
-
-    public BookId(String id) {
+    public BookOwnedID(String id)
+    {
         super(id);
     }
-
 }

@@ -48,19 +48,24 @@ public class FullName implements ValueObject {
 //        return lastName;
 //    }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FullName fullName = (FullName) o;
+        return Objects.equals(firstName, fullName.firstName) &&
+                Objects.equals(lastName, fullName.lastName);
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(firstName,lastName);
+        return Objects.hash(firstName, lastName);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-       return firstName + lastName;
+    public String toString()
+    {
+        return String.format("%s %s", this.firstName,this.lastName);
     }
 }

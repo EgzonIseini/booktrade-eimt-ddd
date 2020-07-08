@@ -7,13 +7,13 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 @Getter
-public class BookOwnedID extends DomainObjectId {
+public class OwnedBookId extends DomainObjectId {
 
-    protected BookOwnedID()
+    protected OwnedBookId()
     {
         super("");
     }
-    public BookOwnedID(String id)
+    public OwnedBookId(String id)
     {
         super(id);
     }

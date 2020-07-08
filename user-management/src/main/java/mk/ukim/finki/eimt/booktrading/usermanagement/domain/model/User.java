@@ -1,13 +1,16 @@
 package mk.ukim.finki.eimt.booktrading.usermanagement.domain.model;
 
 import lombok.Getter;
+import lombok.NonNull;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.AbstractEntity;
+import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.DomainObjectId;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.info.Email;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.info.FullName;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.util.Set;
 
 
 @Entity
@@ -32,7 +35,7 @@ public class User extends AbstractEntity<UserId> {
     private Email email;
 
     @OneToMany(cascade =  CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<BookOwned> books;
+    private Set<OwnedBook> books;
 
     protected User()
     {
@@ -41,6 +44,7 @@ public class User extends AbstractEntity<UserId> {
 
     public User(@NonNull FullName fullName, @NonNull Email email)
     {
+        super(DomainObjectId.randomId(UserId.class));
         setEmail(email);
         setFullname(fullName);
     }

@@ -7,9 +7,9 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "books_owned")
+@Table(name = "owned_books")
 @Getter
-public class BookOwned extends AbstractEntity<BookOwnedID> {
+public class OwnedBook extends AbstractEntity<OwnedBookId> {
 
     @Column(name = "purchased_time")
     private Instant purchase;
@@ -18,10 +18,13 @@ public class BookOwned extends AbstractEntity<BookOwnedID> {
     @AttributeOverride(name = "id",column = @Column(name = "book_id",nullable = false))
     private BookId bookId;
 
-    protected BookOwned()
+    @Column(name = "book_available", nullable = false)
+    private Boolean available;
+
+    protected OwnedBook()
     {}
 
-    public BookOwned(@NonNull Instant purchase)
+    public OwnedBook(@NonNull Instant purchase)
     {
         setPurchase(purchase);
     }

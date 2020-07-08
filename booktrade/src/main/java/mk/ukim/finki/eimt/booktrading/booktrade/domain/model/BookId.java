@@ -1,4 +1,4 @@
-package mk.ukim.finki.eimt.booktrading.bookmanagement.domain.model;
+package mk.ukim.finki.eimt.booktrading.booktrade.domain.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,13 +9,13 @@ import javax.persistence.Embeddable;
 @Getter
 @Embeddable
 @EqualsAndHashCode(callSuper = false)
-public class PublisherId extends DomainObjectId {
+public class BookId extends DomainObjectId {
 
-    protected PublisherId() {
+    protected BookId() {
         super("");
     }
 
-    public PublisherId(String id) {
+    public BookId(String id) {
         super(id);
     }
 

@@ -6,6 +6,8 @@ import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.DomainObjectId;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.info.Email;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.info.FullName;
+import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.dto.CreateUserRequestDto;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -22,11 +24,10 @@ public class User extends AbstractEntity<UserId> {
     private Long version;
 
     @Embedded
-    @AttributeOverrides(
+    @AttributeOverrides({
             @AttributeOverride(name = "firstName", column = @Column(name = "first_name", nullable = false)),
             @AttributeOverride(name = "lastName", column = @Column(name = "last_name", nullable = false))
-
-    )
+    })
     private FullName fullname;
 
 
@@ -47,6 +48,13 @@ public class User extends AbstractEntity<UserId> {
         super(DomainObjectId.randomId(UserId.class));
         setEmail(email);
         setFullname(fullName);
+    }
+
+    public static User valueOf(CreateUserRequestDto userRequestDto) {
+        return new User(
+                new FullName(userRequestDto.getFirstName(), userRequestDto.getLastName()),
+                new Email(userRequestDto.getEmail())
+        );
     }
 
 

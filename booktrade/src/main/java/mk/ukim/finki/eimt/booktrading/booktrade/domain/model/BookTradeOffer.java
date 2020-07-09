@@ -2,11 +2,14 @@ package mk.ukim.finki.eimt.booktrading.booktrade.domain.model;
 
 import lombok.Getter;
 import lombok.NonNull;
+import mk.ukim.finki.eimt.booktrading.booktrade.domain.model.dto.BookTradeOfferRequestDto;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.DomainObjectId;
+import org.apache.catalina.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -52,6 +55,16 @@ public class BookTradeOffer extends AbstractEntity<BookTradeOfferId> {
         setBookTradeLength(bookTradeLength);
     }
 
+    public static BookTradeOffer valueOf(BookTradeOfferRequestDto requestDto) {
+        return new BookTradeOffer(
+                new UserId(requestDto.getFirstParty()),
+                new UserId(requestDto.getSecondParty()),
+                new BookId(requestDto.getRequestedBook()),
+                new BookId(requestDto.getOfferedBook()),
+                requestDto.getTradeEndingDate()
+        );
+    }
+
     public void setRequiredBookId(BookId requiredBookId) {
         this.requiredBookId = requiredBookId;
     }
@@ -61,7 +74,7 @@ public class BookTradeOffer extends AbstractEntity<BookTradeOfferId> {
     }
 
     public void setBookTradeLength(LocalDateTime bookTradeLength) {
-        if(bookTradeLength.isBefore(LocalDateTime.of(bookTradeLength.toLocalDate(), bookTradeLength.toLocalTime()).plusDays(7))) {
+        if(bookTradeLength.isBefore(LocalDateTime.now().plusDays(7))) {
             throw new IllegalArgumentException("Book trade length should be longer than 7 days.");
         }
         this.bookTradeLength = bookTradeLength;

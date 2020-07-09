@@ -3,6 +3,7 @@ package mk.ukim.finki.eimt.booktrading.bookmanagement.domain.model;
 import com.fasterxml.jackson.databind.util.ClassUtil;
 import lombok.Getter;
 import lombok.NonNull;
+import mk.ukim.finki.eimt.booktrading.bookmanagement.domain.model.dto.CreateNewBookRequestDto;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.AbstractEntity;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.DomainObjectId;
 
@@ -23,19 +24,31 @@ public class Book extends AbstractEntity<BookId> {
     @Embedded
     private Rating rating;
 
-    @Column(name = "author_id", nullable = false)
+    @Embedded
+    @AttributeOverride(name = "id", column = @Column(name = "author_id"))
     private AuthorId authorId;
 
-    @Column(name = "publisher_id", nullable = false)
+    @Embedded
+    @AttributeOverride(name = "id", column = @Column(name = "publisher_id"))
     private PublisherId publisherId;
 
     public Book() {}
 
     private Book(String bookName, @NonNull Rating rating, AuthorId authorId, PublisherId publisherId) {
         super(DomainObjectId.randomId(BookId.class));
+        changeBookName(bookName);
         setRating(rating);
         setAuthor(authorId);
         setPublisher(publisherId);
+    }
+
+    public static Book valueOf(CreateNewBookRequestDto createNewBookRequestDto) {
+        return new Book(
+                createNewBookRequestDto.getBookName(),
+                new Rating(createNewBookRequestDto.getRating()),
+                new AuthorId(createNewBookRequestDto.getAuthorId()),
+                new PublisherId(createNewBookRequestDto.getPublisherId())
+        );
     }
 
     public void changeBookName(String newName) {

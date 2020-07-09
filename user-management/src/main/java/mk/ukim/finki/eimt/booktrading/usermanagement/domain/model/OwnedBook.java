@@ -13,6 +13,8 @@ import java.time.Instant;
 @Getter
 public class OwnedBook extends AbstractEntity<OwnedBookId> {
 
+
+
     @Column(name = "purchased_time")
     private Instant purchase;
 
@@ -20,15 +22,22 @@ public class OwnedBook extends AbstractEntity<OwnedBookId> {
     @AttributeOverride(name = "id", column = @Column(name = "book_id", nullable = false))
     private BookId bookId;
 
-    @Column(name = "book_available", nullable = false)
-    private Boolean available;
-
-    protected OwnedBook() {
+    public void setBookId(BookId bookId) {
+        this.bookId = bookId;
     }
 
-    public OwnedBook(@NonNull Instant purchase) {
+    @Column(name = "book_available", nullable = false)
+    private final Boolean available;
+
+    protected OwnedBook() {
+        available = true;
+    }
+
+    public OwnedBook(@NonNull Instant purchase, @NonNull BookId bookId) {
         super(DomainObjectId.randomId(OwnedBookId.class));
         setPurchase(purchase);
+        setBookId(bookId);
+        available=false;
     }
 
     public Instant getPurchase() {

@@ -3,10 +3,7 @@ package mk.ukim.finki.eimt.booktrading.usermanagement.controller;
 import mk.ukim.finki.eimt.booktrading.usermanagement.application.UserApplicationService;
 import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.User;
 import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.dto.CreateUserRequestDto;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -24,5 +21,18 @@ public class UserController {
     public User createNewUser(@RequestBody CreateUserRequestDto userRequestDto) {
         return this.userApplicationService.createNewUser(userRequestDto);
     }
+
+    @PostMapping( "/{userID}/book/{bookID}")
+    public User addOwnedBook(@PathVariable String userID, @PathVariable String bookID)
+    {
+        return userApplicationService.addBook(userID,bookID);
+    }
+
+    @DeleteMapping("{id}")
+    public void  deleteUser(@PathVariable String id)
+    {
+        userApplicationService.deleteUser(id);
+    }
+
 
 }

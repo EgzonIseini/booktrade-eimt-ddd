@@ -12,6 +12,7 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -40,7 +41,6 @@ public class User extends AbstractEntity<UserId> {
 
     protected User()
     {
-
     }
 
     public User(@NonNull FullName fullName, @NonNull Email email)
@@ -48,6 +48,7 @@ public class User extends AbstractEntity<UserId> {
         super(DomainObjectId.randomId(UserId.class));
         setEmail(email);
         setFullname(fullName);
+        books = new HashSet<>();
     }
 
     public static User valueOf(CreateUserRequestDto userRequestDto) {
@@ -56,6 +57,8 @@ public class User extends AbstractEntity<UserId> {
                 new Email(userRequestDto.getEmail())
         );
     }
+
+
 
 
     public void setFullname(FullName fullname) {

@@ -2,8 +2,10 @@ package mk.ukim.finki.eimt.booktrading.usermanagement.application;
 
 import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.*;
 import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.dto.CreateUserRequestDto;
+import mk.ukim.finki.eimt.booktrading.usermanagement.integration.BookTradeAcceptedRabbitMqEvent;
 import mk.ukim.finki.eimt.booktrading.usermanagement.repository.OwnedBookRepository;
 import mk.ukim.finki.eimt.booktrading.usermanagement.repository.UserRepository;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -57,6 +59,16 @@ public class UserApplicationService {
 
     public Page<OwnedBook> getAllAvailableBooks(Pageable pageable) {
         return ownedBookRepository.findAllByAvailableTrue(pageable);
+    }
+
+    public void onBookTradeAccepted(BookTradeAcceptedRabbitMqEvent event) {
+        var firstPartyBook = ownedBookRepository.findById(new OwnedBookId(event.getFirstPartyBookId().getId())).orElseThrow(RuntimeException::new);
+        var secondPartyBook = ownedBookRepository.findById(new OwnedBookId(event.getSecondPartyBookId().getId())).orElseThrow(RuntimeException::new);
+
+        firstPartyBook.setAvailable(false);
+        secondPartyBook.setAvailable(false);
+
+        ownedBookRepository.saveAll(List.of(firstPartyBook, secondPartyBook));
     }
 
 }

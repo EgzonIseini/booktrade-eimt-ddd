@@ -1,18 +1,16 @@
 package mk.ukim.finki.eimt.booktrading.usermanagement.application;
 
-import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.info.Email;
-import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.info.FullName;
-import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.BookId;
-import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.OwnedBook;
-import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.User;
-import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.UserId;
+import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.*;
 import mk.ukim.finki.eimt.booktrading.usermanagement.domain.model.dto.CreateUserRequestDto;
-import mk.ukim.finki.eimt.booktrading.usermanagement.domain.repository.OwnedBookRepository;
-import mk.ukim.finki.eimt.booktrading.usermanagement.domain.repository.UserRepository;
+import mk.ukim.finki.eimt.booktrading.usermanagement.repository.OwnedBookRepository;
+import mk.ukim.finki.eimt.booktrading.usermanagement.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
+import java.util.List;
 
 @Service
 @Transactional
@@ -33,20 +31,32 @@ public class UserApplicationService {
         User newUser = User.valueOf(userRequestDto);
         return userRepository.save(newUser);
     }
-    public void deleteUser(String ID)
-    {
-       userRepository.deleteById(new UserId(ID));
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    public User addBook(String userID, String bookID)
-    {
+    public void deleteUser(String ID) {
+        userRepository.deleteById(new UserId(ID));
+    }
+
+    public User addBook(String userID, String bookID) {
         User user = userRepository.findById(new UserId(userID)).orElseThrow(RuntimeException::new);
-        OwnedBook ownedBook = new OwnedBook(Instant.now(),new BookId(bookID));
+        OwnedBook ownedBook = new OwnedBook(Instant.now(), new BookId(bookID));
         ownedBookRepository.save(ownedBook);
         user.getBooks().add(ownedBook);
         return userRepository.save(user);
 
     }
 
+    public OwnedBook setBookAvailability(OwnedBookId ownedBookId, Boolean availability) {
+        var book = ownedBookRepository.findById(ownedBookId).orElseThrow(RuntimeException::new);
+        book.setAvailable(availability);
+        return ownedBookRepository.save(book);
+    }
+
+    public Page<OwnedBook> getAllAvailableBooks(Pageable pageable) {
+        return ownedBookRepository.findAllByAvailableTrue(pageable);
+    }
 
 }

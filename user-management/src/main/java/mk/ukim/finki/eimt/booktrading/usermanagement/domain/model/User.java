@@ -1,5 +1,9 @@
 package mk.ukim.finki.eimt.booktrading.usermanagement.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import lombok.Getter;
 import lombok.NonNull;
 import mk.ukim.finki.eimt.booktrading.sharedkernel.domain.base.AbstractEntity;
@@ -36,7 +40,7 @@ public class User extends AbstractEntity<UserId> {
     @AttributeOverride(name = "email", column = @Column(name = "email_address", nullable = false))
     private Email email;
 
-    @OneToMany(cascade =  CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade =  CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<OwnedBook> books;
 
     protected User()

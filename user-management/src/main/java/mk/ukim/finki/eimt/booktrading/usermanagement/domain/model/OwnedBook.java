@@ -13,8 +13,6 @@ import java.time.Instant;
 @Getter
 public class OwnedBook extends AbstractEntity<OwnedBookId> {
 
-
-
     @Column(name = "purchased_time")
     private Instant purchase;
 
@@ -27,7 +25,7 @@ public class OwnedBook extends AbstractEntity<OwnedBookId> {
     }
 
     @Column(name = "book_available", nullable = false)
-    private final Boolean available;
+    private Boolean available;
 
     protected OwnedBook() {
         available = true;
@@ -46,6 +44,10 @@ public class OwnedBook extends AbstractEntity<OwnedBookId> {
 
     public void setPurchase(Instant purchase) {
         this.purchase = purchase;
+    }
+
+    public void setAvailable(Boolean isAvailable) {
+        this.available = isAvailable;
     }
 
 }

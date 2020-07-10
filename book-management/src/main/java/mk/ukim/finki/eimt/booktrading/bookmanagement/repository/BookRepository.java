@@ -1,4 +1,4 @@
-package mk.ukim.finki.eimt.booktrading.bookmanagement.domain.repository;
+package mk.ukim.finki.eimt.booktrading.bookmanagement.repository;
 
 import mk.ukim.finki.eimt.booktrading.bookmanagement.domain.model.Book;
 import mk.ukim.finki.eimt.booktrading.bookmanagement.domain.model.BookId;
